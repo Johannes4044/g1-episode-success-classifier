@@ -28,6 +28,8 @@ import numpy.typing as npt
 
 FloatArray = npt.NDArray[np.float64]
 
+STATE_DIM = 31
+
 
 @dataclass(frozen=True)
 class Episode:
@@ -45,7 +47,7 @@ def load_episode(npz_path: Path) -> Episode:
     """Read one episode from its .npz file and the .json file next to it."""
     arrays = np.load(npz_path)
     meta = json.loads(npz_path.with_suffix(".json").read_text())
-    return Episode(
+    episode = Episode(
         name=npz_path.stem,
         state=arrays["observation.state"].astype(np.float64),
         action=arrays["action"].astype(np.float64),
@@ -53,3 +55,17 @@ def load_episode(npz_path: Path) -> Episode:
         arm=meta["episode"]["arm"],
         success=meta["outcome"]["success"],
     )
+    _check(episode)
+    return episode
+
+
+def _check(episode: Episode) -> None:
+    """Raise a ValueError if the episode does not have the expected format."""
+    frames = len(episode.timestamp)
+    if episode.state.shape != (frames, STATE_DIM) or episode.action.shape != (frames, STATE_DIM):
+        raise ValueError(
+            f"{episode.name}: expected state and action of shape ({frames}, {STATE_DIM}), "
+            f"got {episode.state.shape} and {episode.action.shape}"
+        )
+    if episode.arm not in ("left", "right"):
+        raise ValueError(f"{episode.name}: arm must be left or right, got {episode.arm!r}")
