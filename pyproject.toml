@@ -1,0 +1,85 @@
+[project]
+name = "g1-episode-success-classifier"
+version = "0.1.0"
+description = "Predict from joint data whether a G1 place episode succeeded"
+requires-python = ">=3.11"
+dependencies = [
+  "numpy>=1.26",
+  "scikit-learn>=1.5",
+  "matplotlib>=3.8",
+]
+
+[dependency-groups]
+dev = [
+  "pytest>=8",
+  "pytest-cov>=6",
+  "hypothesis>=6.100",
+  "mypy>=1.15",
+  "ruff>=0.5",
+  "ipykernel>=6",
+]
+
+# The folders are imported straight from the project root (like the example project),
+# so there is nothing to build or install.
+[tool.uv]
+package = false
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+extend-exclude = ["*.ipynb"]
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "N", "UP", "B", "SIM", "C4", "C90", "PL", "RET", "ARG", "ERA", "RUF", "PT", "D"]
+# D104: an empty __init__.py has nothing to document.
+# N803/N806: X and X_train are the usual names in machine learning code.
+ignore = ["D104", "N803", "N806"]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["D100", "D103", "PLR2004"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_unreachable = true
+files = ["data", "models", "evaluation", "tests"]
+explicit_package_bases = true
+
+[[tool.mypy.overrides]]
+module = ["sklearn.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = [
+  "-ra",
+  "--strict-markers",
+  "--strict-config",
+  "--import-mode=importlib",
+  "--cov",
+  "--cov-report=term-missing:skip-covered",
+]
+filterwarnings = ["error"]
+markers = [
+  "unit: one function or class, no files",
+  "integration: several parts together, or reading files from tmp_path",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["data", "models", "evaluation"]
+
+[tool.coverage.report]
+# Raise to 70 once there is real code to measure.
+fail_under = 0
+show_missing = true
+skip_empty = true
+exclude_also = ["raise NotImplementedError"]
