@@ -1,0 +1,49 @@
+{
+  "config": {
+    "task": "place",
+    "scene": "tabletop_trays",
+    "seed": 0,
+    "cameras": [],
+    "cam_w": 424,
+    "cam_h": 240,
+    "fps": 30.0,
+    "perturb_rate": 1.0,
+    "randomise": "all",
+    "heldout": false,
+    "controller": "kinematic"
+  },
+  "dataset": {
+    "episodes": 400,
+    "success": 303,
+    "success_rate": 0.7575,
+    "disk_mb": 29.5,
+    "disk_mb_per_episode": 0.07,
+    "length_s": {
+      "min": 8.57,
+      "mean": 14.59,
+      "max": 20.0
+    },
+    "frames_total": 175038,
+    "failure_reasons": {
+      "blue_can is beside the purple_tray": 17,
+      "yellow_ball is beside the white_tray": 17,
+      "blue_can is beside the white_tray": 14,
+      "yellow_ball is beside the purple_tray": 12,
+      "green_cube is beside the purple_tray": 12,
+      "red_cube is beside the white_tray": 11,
+      "green_cube is beside the white_tray": 8,
+      "red_cube is beside the purple_tray": 6
+    }
+  },
+  "this_run": {
+    "episodes_run": 400,
+    "success": 303,
+    "wall_s": 120.8,
+    "episodes_per_hour": 11919.9,
+    "mean_episode_wall_s": 2.36,
+    "workers": 8,
+    "cpus": 10,
+    "platform": "darwin",
+    "mujoco_gl": ""
+  }
+}

@@ -1,0 +1,210 @@
+{
+  "episodes": 400,
+  "success": 303,
+  "success_rate": 0.7575,
+  "counts": {
+    "outcome": {
+      "failure": 97,
+      "success": 303
+    },
+    "task": {
+      "place/failure": 97,
+      "place/success": 303
+    },
+    "object": {
+      "blue_can/failure": 31,
+      "blue_can/success": 58,
+      "green_cube/failure": 20,
+      "green_cube/success": 72,
+      "red_cube/failure": 17,
+      "red_cube/success": 87,
+      "yellow_ball/failure": 29,
+      "yellow_ball/success": 86
+    },
+    "target": {
+      "purple_tray/failure": 47,
+      "purple_tray/success": 145,
+      "white_tray/failure": 50,
+      "white_tray/success": 158
+    },
+    "arm": {
+      "left/failure": 50,
+      "left/success": 142,
+      "right/failure": 47,
+      "right/success": 161
+    },
+    "perturbation": {
+      "drop/failure": 72,
+      "drop/success": 52,
+      "nudge/failure": 14,
+      "nudge/success": 162,
+      "slip/failure": 11,
+      "slip/success": 89
+    },
+    "instruction_template": {
+      "0": 98,
+      "1": 107,
+      "2": 101,
+      "3": 94
+    }
+  },
+  "failure_reasons": {
+    "blue_can is beside the purple_tray": 17,
+    "yellow_ball is beside the white_tray": 17,
+    "blue_can is beside the white_tray": 14,
+    "yellow_ball is beside the purple_tray": 12,
+    "green_cube is beside the purple_tray": 12,
+    "red_cube is beside the white_tray": 11,
+    "green_cube is beside the white_tray": 8,
+    "red_cube is beside the purple_tray": 6
+  },
+  "expert_attempts": {
+    "1": 173,
+    "2": 133,
+    "3": 94
+  },
+  "length_s": {
+    "min": 8.57,
+    "mean": 14.59,
+    "max": 20.0
+  },
+  "success_length_s": {
+    "min": 8.57,
+    "mean": 13.76,
+    "max": 20.0
+  },
+  "frames_total": 175038,
+  "disk_mb": 29.5,
+  "disk_mb_per_episode": 0.07,
+  "action_range": {
+    "left_shoulder_pitch_joint": [
+      -3.0392,
+      1.9246
+    ],
+    "left_shoulder_roll_joint": [
+      -0.8884,
+      2.2015
+    ],
+    "left_shoulder_yaw_joint": [
+      -2.568,
+      2.5423
+    ],
+    "left_elbow_joint": [
+      -0.9972,
+      2.0444
+    ],
+    "left_wrist_roll_joint": [
+      -1.9222,
+      1.9222
+    ],
+    "left_wrist_pitch_joint": [
+      -1.5644,
+      1.5644
+    ],
+    "left_wrist_yaw_joint": [
+      -1.5644,
+      1.5644
+    ],
+    "right_shoulder_pitch_joint": [
+      -3.0392,
+      2.6204
+    ],
+    "right_shoulder_roll_joint": [
+      -2.2015,
+      0.9906
+    ],
+    "right_shoulder_yaw_joint": [
+      -2.568,
+      2.568
+    ],
+    "right_elbow_joint": [
+      -0.9972,
+      2.0444
+    ],
+    "right_wrist_roll_joint": [
+      -1.9222,
+      1.7307
+    ],
+    "right_wrist_pitch_joint": [
+      -1.5644,
+      1.5644
+    ],
+    "right_wrist_yaw_joint": [
+      -1.5644,
+      1.5644
+    ],
+    "left_thumb_metacarpal_joint": [
+      -0.0202,
+      1.57
+    ],
+    "left_thumb_proximal_joint": [
+      -0.0065,
+      1.0
+    ],
+    "left_index_proximal_joint": [
+      -0.0,
+      1.4
+    ],
+    "left_middle_proximal_joint": [
+      -0.0,
+      1.4
+    ],
+    "left_ring_proximal_joint": [
+      -0.0,
+      1.4
+    ],
+    "left_pinky_proximal_joint": [
+      -0.0,
+      1.4
+    ],
+    "right_thumb_metacarpal_joint": [
+      -0.009,
+      1.57
+    ],
+    "right_thumb_proximal_joint": [
+      -0.0411,
+      1.0
+    ],
+    "right_index_proximal_joint": [
+      0.0,
+      1.4
+    ],
+    "right_middle_proximal_joint": [
+      0.0,
+      1.4
+    ],
+    "right_ring_proximal_joint": [
+      0.0,
+      1.4
+    ],
+    "right_pinky_proximal_joint": [
+      0.0,
+      1.4
+    ],
+    "head_pan_joint": [
+      -0.0594,
+      0.0599
+    ],
+    "head_tilt_joint": [
+      0.9402,
+      1.0595
+    ],
+    "base_vx": [
+      0.0,
+      0.0
+    ],
+    "base_vy": [
+      0.0,
+      0.0
+    ],
+    "base_wz": [
+      0.0,
+      0.0
+    ]
+  },
+  "action_slots_never_moving": [
+    "base_vx",
+    "base_vy",
+    "base_wz"
+  ]
+}

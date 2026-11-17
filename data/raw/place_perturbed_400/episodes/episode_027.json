@@ -1,0 +1,412 @@
+{
+  "fps": 30.0,
+  "frames": 600,
+  "state_dim": 31,
+  "state_names": [
+    "left_shoulder_pitch_joint",
+    "left_shoulder_roll_joint",
+    "left_shoulder_yaw_joint",
+    "left_elbow_joint",
+    "left_wrist_roll_joint",
+    "left_wrist_pitch_joint",
+    "left_wrist_yaw_joint",
+    "right_shoulder_pitch_joint",
+    "right_shoulder_roll_joint",
+    "right_shoulder_yaw_joint",
+    "right_elbow_joint",
+    "right_wrist_roll_joint",
+    "right_wrist_pitch_joint",
+    "right_wrist_yaw_joint",
+    "left_thumb_metacarpal_joint",
+    "left_thumb_proximal_joint",
+    "left_index_proximal_joint",
+    "left_middle_proximal_joint",
+    "left_ring_proximal_joint",
+    "left_pinky_proximal_joint",
+    "right_thumb_metacarpal_joint",
+    "right_thumb_proximal_joint",
+    "right_index_proximal_joint",
+    "right_middle_proximal_joint",
+    "right_ring_proximal_joint",
+    "right_pinky_proximal_joint",
+    "head_pan_joint",
+    "head_tilt_joint",
+    "base_vx",
+    "base_vy",
+    "base_wz"
+  ],
+  "slots": {
+    "arm": [
+      0,
+      14
+    ],
+    "hand": [
+      14,
+      26
+    ],
+    "head": [
+      26,
+      28
+    ],
+    "base": [
+      28,
+      31
+    ]
+  },
+  "units": {
+    "joints": "rad",
+    "base_vx": "m/s",
+    "base_vy": "m/s",
+    "base_wz": "rad/s"
+  },
+  "semantics": {
+    "observation.state[28:31]": "measured base velocity, body frame",
+    "action[28:31]": "commanded base velocity, body frame",
+    "action[0:28]": "held joint setpoints, not deltas"
+  },
+  "cameras": {},
+  "task": "place the red cube into the white tray",
+  "seed": 27,
+  "episode": {
+    "task": "place",
+    "seed": 27,
+    "instruction": "place the red cube into the white tray",
+    "template": 1,
+    "object": "red_cube",
+    "target": "white_tray",
+    "arm": "left",
+    "layout": {
+      "red_cube": [
+        0.37341839941526406,
+        0.2866364183276998,
+        -2.4496328507108323
+      ],
+      "brown_box": [
+        0.43011198138158524,
+        -0.3839857888458999,
+        -0.9893028223435761
+      ],
+      "yellow_ball": [
+        0.44033712785787293,
+        0.42475515607176934,
+        1.2208720853535795
+      ],
+      "blue_can": [
+        0.5891223173347232,
+        0.21942299710718371,
+        3.011004378390906
+      ],
+      "green_cube": [
+        0.6592369582507268,
+        -0.40105726845181305,
+        -0.14372489208733735
+      ],
+      "white_tray": [
+        0.40758933052881985,
+        0.03728785096814158,
+        0.0
+      ],
+      "purple_tray": [
+        0.7107956490394273,
+        -0.09398938628754591,
+        0.0
+      ]
+    },
+    "extra": {
+      "head": [
+        -0.014485985285152556,
+        1.023416025413127
+      ],
+      "perturbation_record": {
+        "kind": "drop",
+        "offset": [
+          0.0004,
+          0.0418
+        ],
+        "at_s": 0.332
+      },
+      "style": {
+        "speed": 0.846,
+        "approach_above": 0.106,
+        "lift_by": 0.157,
+        "hold_s": 1.035,
+        "pause_s": 0.233
+      }
+    },
+    "scene": "tabletop_trays"
+  },
+  "outcome": {
+    "success": false,
+    "reason": "red_cube is beside the white_tray",
+    "metrics": {
+      "offset_x": -0.014,
+      "offset_y": 0.2017,
+      "height_m": -0.0,
+      "released": 1.0,
+      "speed": 0.0
+    },
+    "first_success_s": null,
+    "frames": 600,
+    "seconds": 20.0,
+    "timed_out": true
+  },
+  "policy_info": {
+    "phase": "reopen",
+    "done": false,
+    "attempts": 3,
+    "events": [
+      "t=8.77 grasp attempt 1 failed (rose 0.0 cm): open, rise, try again",
+      "t=14.20 lost the object during transport: open, rise, pick it up again",
+      "t=20.37 giving up after 3 attempts"
+    ]
+  },
+  "randomisation": {
+    "config": [
+      "objects",
+      "base",
+      "start_pose",
+      "head",
+      "lighting",
+      "table",
+      "camera_mount",
+      "style"
+    ],
+    "base": [
+      0.0909,
+      0.0117,
+      0.0488
+    ],
+    "objects": {
+      "seed": 1251940179,
+      "colour": {
+        "red_cube": [
+          0.84,
+          0.062,
+          0.12,
+          1.0
+        ],
+        "brown_box": [
+          0.686,
+          0.518,
+          0.345,
+          1.0
+        ],
+        "yellow_ball": [
+          0.931,
+          0.792,
+          0.09,
+          1.0
+        ],
+        "blue_can": [
+          0.079,
+          0.422,
+          0.778,
+          1.0
+        ],
+        "green_cube": [
+          0.21,
+          0.598,
+          0.208,
+          1.0
+        ],
+        "white_tray": [
+          0.877,
+          0.959,
+          0.877,
+          1.0
+        ],
+        "purple_tray": [
+          0.604,
+          0.187,
+          0.746,
+          1.0
+        ]
+      },
+      "mass": {
+        "red_cube": 0.9739,
+        "brown_box": 0.9031,
+        "yellow_ball": 1.0395,
+        "blue_can": 0.9769,
+        "green_cube": 0.9527,
+        "white_tray": 1.0878,
+        "purple_tray": 0.9046
+      },
+      "friction": {
+        "red_cube": 0.9083,
+        "brown_box": 1.1807,
+        "yellow_ball": 1.1452,
+        "blue_can": 0.9449,
+        "green_cube": 1.1724,
+        "white_tray": 0.9685,
+        "purple_tray": 1.0778
+      }
+    },
+    "start_pose": {
+      "left_shoulder_pitch_joint": 0.0772,
+      "left_shoulder_roll_joint": 0.1395,
+      "left_shoulder_yaw_joint": 0.0483,
+      "left_elbow_joint": 1.3328,
+      "left_wrist_roll_joint": 0.088,
+      "left_wrist_pitch_joint": -0.0713,
+      "left_wrist_yaw_joint": 0.0775,
+      "right_shoulder_pitch_joint": 0.2877,
+      "right_shoulder_roll_joint": -0.1753,
+      "right_shoulder_yaw_joint": -0.1011,
+      "right_elbow_joint": 1.1707,
+      "right_wrist_roll_joint": 0.0389,
+      "right_wrist_pitch_joint": 0.0605,
+      "right_wrist_yaw_joint": 0.0299,
+      "left_thumb_metacarpal_joint": 0.1683,
+      "left_thumb_proximal_joint": 0.0055,
+      "left_index_proximal_joint": 0.1264,
+      "left_middle_proximal_joint": 0.1957,
+      "left_ring_proximal_joint": 0.1117,
+      "left_pinky_proximal_joint": 0.0861,
+      "right_thumb_metacarpal_joint": 0.0388,
+      "right_thumb_proximal_joint": 0.0031,
+      "right_index_proximal_joint": 0.1973,
+      "right_middle_proximal_joint": 0.0924,
+      "right_ring_proximal_joint": 0.0503,
+      "right_pinky_proximal_joint": 0.1347
+    },
+    "lighting": {
+      "gain": 0.847,
+      "warmth": 0.005
+    },
+    "table_rgba": [
+      0.722,
+      0.679,
+      0.487,
+      1.0
+    ],
+    "camera_mount": {
+      "d455_rgb": {
+        "pos": [
+          0.0447,
+          0.0027,
+          0.0107
+        ],
+        "quat": [
+          -0.4956,
+          -0.4999,
+          0.5047,
+          0.4998
+        ]
+      },
+      "d435i_rgb": {
+        "pos": [
+          0.0662,
+          0.0157,
+          0.4184
+        ],
+        "quat": [
+          0.6592,
+          0.2558,
+          -0.2557,
+          -0.6593
+        ]
+      }
+    },
+    "head": [
+      -0.0145,
+      1.0234
+    ],
+    "style": {
+      "speed": 0.846,
+      "approach_above": 0.106,
+      "lift_by": 0.157,
+      "hold_s": 1.035,
+      "pause_s": 0.233
+    }
+  },
+  "perturbation": {
+    "kind": "drop",
+    "offset": [
+      0.0004,
+      0.0418
+    ],
+    "at_s": 0.332,
+    "applied": true
+  },
+  "quality": {
+    "ok": true,
+    "arm_on_table_frames": 2,
+    "arm_on_other_objects_frames": 0,
+    "touched": {
+      "pick_table": 2
+    },
+    "max_joint_speed": 3.0
+  },
+  "phases": [
+    "idle",
+    "rise",
+    "approach",
+    "descend",
+    "close",
+    "lift",
+    "check",
+    "hold",
+    "transport",
+    "lower",
+    "release",
+    "retreat",
+    "reopen",
+    "done",
+    "policy",
+    "carried",
+    "watch"
+  ],
+  "privileged_keys": [
+    "privileged.object_pose",
+    "info.phase"
+  ],
+  "sim_model": {
+    "path": "/Users/johannes/Developer/g1-datagen/models/tasks/tabletop_trays.xml",
+    "scenario": "tabletop_trays",
+    "scenario_base": "tabletop_trays",
+    "scenario_seed": null,
+    "sha256": "2a2c45682d83b70781fdf0e870e00ec3bb8a5b495d6b5990e5d14b521d8c75bd"
+  },
+  "controller": {
+    "name": "kinematic",
+    "modes": [
+      "sim",
+      "damp",
+      "stand",
+      "walk"
+    ],
+    "walk": true,
+    "posture": false,
+    "posture_limits": {},
+    "rate_hz": null,
+    "free_base": false,
+    "teleport": true,
+    "stand_in": true
+  },
+  "wall_s": 2.979,
+  "policy": "g1.data.expert:ScriptedExpert",
+  "scenario": "tabletop_trays",
+  "episode_index": 27,
+  "generation": {
+    "task": "place",
+    "scene": "tabletop_trays",
+    "seed": 0,
+    "cameras": [],
+    "cam_w": 424,
+    "cam_h": 240,
+    "fps": 30.0,
+    "perturb_rate": 1.0,
+    "randomise": [
+      "objects",
+      "base",
+      "start_pose",
+      "head",
+      "lighting",
+      "table",
+      "camera_mount",
+      "style"
+    ],
+    "heldout": false,
+    "controller": "kinematic"
+  }
+}

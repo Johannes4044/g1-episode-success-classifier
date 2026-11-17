@@ -1,0 +1,18 @@
+{
+  "task": "place",
+  "scene": "tabletop_trays",
+  "seed": 0,
+  "cameras": [],
+  "cam_w": 424,
+  "cam_h": 240,
+  "fps": 30.0,
+  "perturb_rate": 1.0,
+  "randomise": "all",
+  "heldout": false,
+  "controller": "kinematic",
+  "created": "2026-11-16 18:39:55",
+  "code": {
+    "git": "f6ec06711f7b7438f7f9d0275c153477addaa4a5",
+    "dirty": false
+  }
+}
