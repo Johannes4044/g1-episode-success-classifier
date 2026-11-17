@@ -18,3 +18,19 @@ def test_load_episode_reads_arrays_and_label(write_episode: Callable[..., Path])
     assert episode.timestamp.shape == (10,)
     assert episode.arm == "right"
     assert episode.success is False
+
+
+@pytest.mark.integration
+def test_load_episode_rejects_different_frame_counts(write_episode: Callable[..., Path]) -> None:
+    npz_path = write_episode(frames=10, action_frames=9)
+
+    with pytest.raises(ValueError, match="episode_000"):
+        load_episode(npz_path)
+
+
+@pytest.mark.integration
+def test_load_episode_rejects_unknown_arm(write_episode: Callable[..., Path]) -> None:
+    npz_path = write_episode(arm="middle")
+
+    with pytest.raises(ValueError, match="arm"):
+        load_episode(npz_path)
