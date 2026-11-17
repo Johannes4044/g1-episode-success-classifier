@@ -19,6 +19,7 @@ The .npz also has privileged.object_pose and info.phase. They only exist in the 
 so they are not loaded.
 """
 
+import json
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -42,4 +43,13 @@ class Episode:
 
 def load_episode(npz_path: Path) -> Episode:
     """Read one episode from its .npz file and the .json file next to it."""
-    raise NotImplementedError
+    arrays = np.load(npz_path)
+    meta = json.loads(npz_path.with_suffix(".json").read_text())
+    return Episode(
+        name=npz_path.stem,
+        state=arrays["observation.state"].astype(np.float64),
+        action=arrays["action"].astype(np.float64),
+        timestamp=arrays["timestamp"].astype(np.float64),
+        arm=meta["episode"]["arm"],
+        success=meta["outcome"]["success"],
+    )
