@@ -30,6 +30,9 @@ FloatArray = npt.NDArray[np.float64]
 IntArray = npt.NDArray[np.int64]
 
 STATE_DIM = 31
+# Columns of state and action that belong to each arm and hand.
+ARM_COLUMNS = {"left": slice(0, 7), "right": slice(7, 14)}
+HAND_COLUMNS = {"left": slice(14, 20), "right": slice(20, 26)}
 
 
 @dataclass(frozen=True)
@@ -68,5 +71,5 @@ def _check(episode: Episode) -> None:
             f"{episode.name}: expected state and action of shape ({frames}, {STATE_DIM}), "
             f"got {episode.state.shape} and {episode.action.shape}"
         )
-    if episode.arm not in ("left", "right"):
+    if episode.arm not in ARM_COLUMNS:
         raise ValueError(f"{episode.name}: arm must be left or right, got {episode.arm!r}")
