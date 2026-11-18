@@ -78,8 +78,8 @@ branch = true
 source = ["data", "models", "evaluation"]
 
 [tool.coverage.report]
-# Raise to 70 once there is real code to measure.
-fail_under = 0
+# 70 % branch coverage is the floor from the testing course.
+fail_under = 70
 show_missing = true
 skip_empty = true
 exclude_also = ["raise NotImplementedError"]
