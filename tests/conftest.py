@@ -7,6 +7,8 @@ import numpy as np
 import numpy.typing as npt
 import pytest
 
+from data.episode import Episode, FloatArray
+
 
 @pytest.fixture
 def write_episode(tmp_path: Path) -> Callable[..., Path]:
@@ -32,3 +34,27 @@ def write_episode(tmp_path: Path) -> Callable[..., Path]:
         return npz_path
 
     return write
+
+
+@pytest.fixture
+def make_episode() -> Callable[..., Episode]:
+    """Build an episode in memory. All joints stay at 0 unless a state is given."""
+
+    def make(
+        frames: int = 10,
+        arm: str = "left",
+        success: bool = True,
+        state: FloatArray | None = None,
+    ) -> Episode:
+        if state is None:
+            state = np.zeros((frames, 31))
+        return Episode(
+            name="episode_test",
+            state=state,
+            action=state.copy(),
+            timestamp=np.arange(len(state)) / 30.0,
+            arm=arm,
+            success=success,
+        )
+
+    return make
