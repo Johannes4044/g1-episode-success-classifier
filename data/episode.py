@@ -66,6 +66,8 @@ def load_episode(npz_path: Path) -> Episode:
 def _check(episode: Episode) -> None:
     """Raise a ValueError if the episode does not have the expected format."""
     frames = len(episode.timestamp)
+    if frames == 0:
+        raise ValueError(f"{episode.name}: has no frames")
     if episode.state.shape != (frames, STATE_DIM) or episode.action.shape != (frames, STATE_DIM):
         raise ValueError(
             f"{episode.name}: expected state and action of shape ({frames}, {STATE_DIM}), "
