@@ -2,8 +2,11 @@ from collections.abc import Callable
 
 import numpy as np
 import pytest
+from hypothesis import given
+from hypothesis import strategies as st
+from hypothesis.extra.numpy import arrays
 
-from data.episode import Episode
+from data.episode import Episode, FloatArray
 from data.features import FEATURE_NAMES, episode_features
 
 
@@ -52,3 +55,28 @@ def test_left_and_right_arm_fill_the_same_columns(make_episode: Callable[..., Ep
     right = episode_features(make_episode(arm="right", state=right_state))
 
     assert left == pytest.approx(right)
+
+
+@pytest.mark.unit
+@given(
+    state=arrays(
+        dtype=np.float64,
+        shape=st.tuples(st.integers(min_value=1, max_value=20), st.just(31)),
+        elements=st.floats(min_value=-3.2, max_value=3.2),
+    ),
+    arm=st.sampled_from(["left", "right"]),
+)
+def test_features_are_finite_for_any_episode(state: FloatArray, arm: str) -> None:
+    episode = Episode(
+        name="generated",
+        state=state,
+        action=state,
+        timestamp=np.arange(len(state)) / 30.0,
+        arm=arm,
+        success=True,
+    )
+
+    features = episode_features(episode)
+
+    assert features.shape == (len(FEATURE_NAMES),)
+    assert np.isfinite(features).all()
