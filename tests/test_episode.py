@@ -34,3 +34,11 @@ def test_load_episode_rejects_unknown_arm(write_episode: Callable[..., Path]) ->
 
     with pytest.raises(ValueError, match="arm"):
         load_episode(npz_path)
+
+
+@pytest.mark.integration
+def test_load_episode_rejects_an_episode_without_frames(write_episode: Callable[..., Path]) -> None:
+    npz_path = write_episode(frames=0)
+
+    with pytest.raises(ValueError, match="no frames"):
+        load_episode(npz_path)
