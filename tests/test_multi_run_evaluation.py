@@ -1,6 +1,8 @@
 import numpy as np
 import pytest
+from sklearn.tree import DecisionTreeClassifier
 
+from data.dataset import build_xy, load_episodes
 from evaluation.multi_run_evaluation import MultiRunEvaluation
 from models.majority_guessing_benchmark import MajorityGuessingBenchmark
 
@@ -73,3 +75,32 @@ def test_metrics_summary_of_a_single_run_has_no_spread() -> None:
 
     assert summary["mean"] == 0.8
     assert summary["std_dev"] == 0.0
+
+
+@pytest.mark.integration
+def test_evaluating_twice_gives_the_same_scores() -> None:
+    rng = np.random.default_rng(0)
+    noise = rng.random((60, 3))
+    labels = rng.integers(0, 2, size=60)
+
+    def create_tree(seed: int) -> DecisionTreeClassifier:
+        return DecisionTreeClassifier(random_state=seed)
+
+    first = MultiRunEvaluation(model_creation=create_tree)
+    second = MultiRunEvaluation(model_creation=create_tree)
+    first.evaluate(nr_runs=5, X=noise, y=labels)
+    second.evaluate(nr_runs=5, X=noise, y=labels)
+
+    assert first.get_validation_macro_f1s() == second.get_validation_macro_f1s()
+
+
+@pytest.mark.integration
+def test_a_tree_beats_majority_guessing_on_the_recorded_episodes() -> None:
+    features, labels = build_xy(load_episodes())
+    tree = MultiRunEvaluation(lambda seed: DecisionTreeClassifier(max_depth=2, random_state=seed))
+    majority = MultiRunEvaluation(lambda _seed: MajorityGuessingBenchmark())
+
+    tree.evaluate(nr_runs=2, X=features, y=labels)
+    majority.evaluate(nr_runs=2, X=features, y=labels)
+
+    assert min(tree.get_validation_macro_f1s()) > max(majority.get_validation_macro_f1s()) + 0.3
