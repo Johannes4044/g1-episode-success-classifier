@@ -11,6 +11,9 @@ from data.features import episode_features
 EPISODES_DIR = Path(__file__).parent / "raw" / "place_perturbed_400" / "episodes"
 
 TEST_SPLIT_SEED = 0
+TEST_FRACTION = 0.2
+# share of what is left after the test set, so validation is also 20 % of all episodes
+VALIDATION_FRACTION = 0.25
 
 Split = tuple[FloatArray, FloatArray, IntArray, IntArray]
 
@@ -33,7 +36,7 @@ def split_off_test(X: FloatArray, y: IntArray) -> Split:
     The split is always the same, so the test set stays untouched between notebooks.
     """
     X_rest, X_test, y_rest, y_test = train_test_split(
-        X, y, test_size=0.2, stratify=y, random_state=TEST_SPLIT_SEED
+        X, y, test_size=TEST_FRACTION, stratify=y, random_state=TEST_SPLIT_SEED
     )
     return X_rest, X_test, y_rest, y_test
 
@@ -41,6 +44,6 @@ def split_off_test(X: FloatArray, y: IntArray) -> Split:
 def split_train_validation(X: FloatArray, y: IntArray, seed: int) -> Split:
     """Split what is left after split_off_test. Returns X_train, X_val, y_train, y_val."""
     X_train, X_val, y_train, y_val = train_test_split(
-        X, y, test_size=0.25, stratify=y, random_state=seed
+        X, y, test_size=VALIDATION_FRACTION, stratify=y, random_state=seed
     )
     return X_train, X_val, y_train, y_val
