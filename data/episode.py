@@ -37,7 +37,10 @@ HAND_COLUMNS = {"left": slice(14, 20), "right": slice(20, 26)}
 
 @dataclass(frozen=True)
 class Episode:
-    """What a real robot would also know about an episode, plus the label."""
+    """What a real robot would also know about an episode, plus the label.
+
+    Raises a ValueError when it is created with data that does not fit the format above.
+    """
 
     name: str
     state: FloatArray
@@ -45,31 +48,28 @@ class Episode:
     arm: str
     success: bool
 
+    def __post_init__(self) -> None:
+        """Check the format, so that code using an Episode does not have to."""
+        frames = len(self.timestamp)
+        if frames == 0:
+            raise ValueError(f"{self.name}: has no frames")
+        if self.state.shape != (frames, STATE_DIM):
+            raise ValueError(
+                f"{self.name}: expected a state of shape ({frames}, {STATE_DIM}), "
+                f"got {self.state.shape}"
+            )
+        if self.arm not in ARM_COLUMNS:
+            raise ValueError(f"{self.name}: arm must be left or right, got {self.arm!r}")
+
 
 def load_episode(npz_path: Path) -> Episode:
     """Read one episode from its .npz file and the .json file next to it."""
     arrays = np.load(npz_path)
     meta = json.loads(npz_path.with_suffix(".json").read_text())
-    episode = Episode(
+    return Episode(
         name=npz_path.stem,
         state=arrays["observation.state"].astype(np.float64),
         timestamp=arrays["timestamp"].astype(np.float64),
         arm=meta["episode"]["arm"],
         success=meta["outcome"]["success"],
     )
-    _check(episode)
-    return episode
-
-
-def _check(episode: Episode) -> None:
-    """Raise a ValueError if the episode does not have the expected format."""
-    frames = len(episode.timestamp)
-    if frames == 0:
-        raise ValueError(f"{episode.name}: has no frames")
-    if episode.state.shape != (frames, STATE_DIM):
-        raise ValueError(
-            f"{episode.name}: expected a state of shape ({frames}, {STATE_DIM}), "
-            f"got {episode.state.shape}"
-        )
-    if episode.arm not in ARM_COLUMNS:
-        raise ValueError(f"{episode.name}: arm must be left or right, got {episode.arm!r}")
