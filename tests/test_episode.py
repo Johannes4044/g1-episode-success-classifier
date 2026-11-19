@@ -1,9 +1,10 @@
 from collections.abc import Callable
 from pathlib import Path
 
+import numpy as np
 import pytest
 
-from data.episode import load_episode
+from data.episode import Episode, load_episode
 
 
 @pytest.mark.integration
@@ -41,3 +42,27 @@ def test_load_episode_rejects_an_episode_without_frames(write_episode: Callable[
 
     with pytest.raises(ValueError, match="no frames"):
         load_episode(npz_path)
+
+
+@pytest.mark.unit
+def test_an_episode_built_by_hand_is_checked_too() -> None:
+    with pytest.raises(ValueError, match="arm"):
+        Episode(
+            name="by_hand",
+            state=np.zeros((5, 31)),
+            timestamp=np.arange(5) / 30.0,
+            arm="middle",
+            success=True,
+        )
+
+
+@pytest.mark.unit
+def test_an_episode_needs_31_state_columns() -> None:
+    with pytest.raises(ValueError, match="by_hand"):
+        Episode(
+            name="by_hand",
+            state=np.zeros((5, 30)),
+            timestamp=np.arange(5) / 30.0,
+            arm="left",
+            success=True,
+        )
