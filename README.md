@@ -49,6 +49,7 @@ The structure follows the SE_15 example project.
     uv run pytest                 # tests with coverage
     uv run pytest -m unit         # only the fast ones
     uv run ruff check . && uv run ruff format --check . && uv run mypy
+    uv run --with mutmut mutmut run   # optional: do the tests notice broken code?
 
 For the notebooks, open them in VS Code and select the interpreter in `.venv`.
 
@@ -64,6 +65,21 @@ For the notebooks, open them in VS Code and select the interpreter in `.venv`.
 4. **Refactor**: the notebook code moved into `data/` and `evaluation/` with tests, then the
    notebooks were changed to import it. The printed results did not change.
 5. **Evaluate**: repeated runs, then the test set once (notebook 04).
+6. **Review**: the code was checked against the Clean Code review checklist and with mutation
+   testing. That found a test that could not tell the last frame from the second one, a crash
+   with a single run, an unused field and unnamed numbers. Each got its own small commit.
+
+## Open points
+
+Things a code review could still argue about:
+
+- `Episode` is frozen, but the numpy arrays inside it can still be changed.
+- `arm` is a plain string. It is checked when an `Episode` is created, an enum would be stricter.
+- `evaluation/` imports the split from `data/`. Passing the split function in would decouple them.
+- Calling `MultiRunEvaluation.evaluate` twice on the same object adds to the earlier results.
+- The two `print_...` methods are only tested for a few words of their output.
+- The type aliases `FloatArray` and `IntArray` live in `data/episode.py` although `models/` and
+  `evaluation/` use them too.
 
 ## Not done
 
