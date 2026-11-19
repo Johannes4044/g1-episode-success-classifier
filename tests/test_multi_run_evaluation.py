@@ -65,3 +65,11 @@ def test_print_metrics_shows_one_line_per_score(capsys: pytest.CaptureFixture[st
     assert "macro_f1_train" in printed
     assert "macro_f1_val" in printed
     assert "f1_failure_val" in printed
+
+
+@pytest.mark.unit
+def test_metrics_summary_of_a_single_run_has_no_spread() -> None:
+    summary = MultiRunEvaluation.get_metrics_summary([0.8])
+
+    assert summary["mean"] == 0.8
+    assert summary["std_dev"] == 0.0
