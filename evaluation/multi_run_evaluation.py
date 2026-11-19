@@ -79,5 +79,6 @@ class MultiRunEvaluation:
             "min": min(values),
             "max": max(values),
             "mean": statistics.mean(values),
-            "std_dev": statistics.stdev(values),
+            # the standard deviation needs at least two values
+            "std_dev": statistics.stdev(values) if len(values) > 1 else 0.0,
         }
