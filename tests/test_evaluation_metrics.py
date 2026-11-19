@@ -44,3 +44,14 @@ def test_report_names_the_run_and_shows_the_macro_f1(capsys: pytest.CaptureFixtu
     printed = capsys.readouterr().out
     assert "Some Model - Validation Set" in printed
     assert "macro f1: 1.0" in printed
+
+
+@pytest.mark.unit
+def test_metrics_still_cover_both_classes_when_only_successes_occur() -> None:
+    only_successes = np.ones(4, dtype=np.int64)
+
+    metrics = EvaluationMetrics(y_true=only_successes, y_pred=only_successes)
+
+    assert metrics.f1_success == 1.0
+    assert metrics.f1_failure == 0.0
+    assert metrics.confusion_matrix.tolist() == [[0, 0], [0, 4]]
