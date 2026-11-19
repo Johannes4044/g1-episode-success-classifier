@@ -10,3 +10,4 @@ htmlcov/
 .ipynb_checkpoints/
 .vscode/
 .DS_Store
+mutants/

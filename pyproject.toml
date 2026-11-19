@@ -83,3 +83,10 @@ fail_under = 70
 show_missing = true
 skip_empty = true
 exclude_also = ["raise NotImplementedError"]
+
+# Mutation testing, run by hand: uv run --with mutmut mutmut run, then ... mutmut results
+[tool.mutmut]
+source_paths = ["data/", "models/", "evaluation/"]
+pytest_add_cli_args = ["--no-cov"]
+pytest_add_cli_args_test_selection = ["tests/"]
+also_copy = ["data/raw/place_perturbed_400/episodes/"]
