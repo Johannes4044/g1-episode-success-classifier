@@ -71,7 +71,6 @@ def test_features_are_finite_for_any_episode(state: FloatArray, arm: str) -> Non
     episode = Episode(
         name="generated",
         state=state,
-        action=state,
         timestamp=np.arange(len(state)) / 30.0,
         arm=arm,
         success=True,

@@ -4,7 +4,7 @@ An episode is two files with the same name:
 
     episode_000.npz
         observation.state   (frames, 31)   where each joint is
-        action              (frames, 31)   where each joint was told to go
+        action              (frames, 31)   where each joint was told to go (not loaded)
         timestamp           (frames,)      seconds since the start of the episode
     episode_000.json
         episode.arm         "left" or "right", the arm that does the task
@@ -16,7 +16,7 @@ The 31 columns of state and action are the same in every episode:
     7-13   right arm       20-25  right hand     28-30  base velocity
 
 The .npz also has privileged.object_pose and info.phase. They only exist in the simulator,
-so they are not loaded.
+so they are not loaded. The action is not loaded either, because no feature uses it so far.
 """
 
 import json
@@ -41,7 +41,6 @@ class Episode:
 
     name: str
     state: FloatArray
-    action: FloatArray
     timestamp: FloatArray
     arm: str
     success: bool
@@ -54,7 +53,6 @@ def load_episode(npz_path: Path) -> Episode:
     episode = Episode(
         name=npz_path.stem,
         state=arrays["observation.state"].astype(np.float64),
-        action=arrays["action"].astype(np.float64),
         timestamp=arrays["timestamp"].astype(np.float64),
         arm=meta["episode"]["arm"],
         success=meta["outcome"]["success"],
@@ -68,10 +66,10 @@ def _check(episode: Episode) -> None:
     frames = len(episode.timestamp)
     if frames == 0:
         raise ValueError(f"{episode.name}: has no frames")
-    if episode.state.shape != (frames, STATE_DIM) or episode.action.shape != (frames, STATE_DIM):
+    if episode.state.shape != (frames, STATE_DIM):
         raise ValueError(
-            f"{episode.name}: expected state and action of shape ({frames}, {STATE_DIM}), "
-            f"got {episode.state.shape} and {episode.action.shape}"
+            f"{episode.name}: expected a state of shape ({frames}, {STATE_DIM}), "
+            f"got {episode.state.shape}"
         )
     if episode.arm not in ARM_COLUMNS:
         raise ValueError(f"{episode.name}: arm must be left or right, got {episode.arm!r}")

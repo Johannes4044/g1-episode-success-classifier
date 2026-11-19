@@ -19,13 +19,13 @@ def write_episode(tmp_path: Path) -> Callable[..., Path]:
         frames: int = 10,
         arm: str = "left",
         success: bool = True,
-        action_frames: int | None = None,
+        timestamp_frames: int | None = None,
     ) -> Path:
         npz_path = tmp_path / f"{name}.npz"
         arrays: dict[str, npt.NDArray[Any]] = {
             "observation.state": np.zeros((frames, 31), dtype=np.float32),
-            "action": np.ones((action_frames or frames, 31), dtype=np.float32),
-            "timestamp": np.arange(frames) / 30.0,
+            "action": np.ones((frames, 31), dtype=np.float32),
+            "timestamp": np.arange(frames if timestamp_frames is None else timestamp_frames) / 30.0,
             "privileged.object_pose": np.zeros((frames, 7), dtype=np.float32),
         }
         np.savez(npz_path, allow_pickle=False, **arrays)
@@ -51,7 +51,6 @@ def make_episode() -> Callable[..., Episode]:
         return Episode(
             name="episode_test",
             state=state,
-            action=state.copy(),
             timestamp=np.arange(len(state)) / 30.0,
             arm=arm,
             success=success,
