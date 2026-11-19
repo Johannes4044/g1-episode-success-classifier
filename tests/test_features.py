@@ -28,14 +28,15 @@ def test_duration_is_the_last_timestamp(make_episode: Callable[..., Episode]) ->
 @pytest.mark.unit
 def test_statistics_of_one_joint(make_episode: Callable[..., Episode]) -> None:
     state = np.zeros((5, 31))
-    state[:, 16] = [0.0, 0.5, 1.0, 1.5, 0.5]  # column 16 is the left index finger
+    # column 16 is the left index finger. No value appears twice, so a wrong frame is noticed.
+    state[:, 16] = [0.0, 0.5, 1.0, 1.5, 0.25]
 
     features = episode_features(make_episode(arm="left", state=state))
 
-    assert features[FEATURE_NAMES.index("mean_index")] == pytest.approx(0.7)
+    assert features[FEATURE_NAMES.index("mean_index")] == pytest.approx(0.65)
     assert features[FEATURE_NAMES.index("min_index")] == pytest.approx(0.0)
     assert features[FEATURE_NAMES.index("max_index")] == pytest.approx(1.5)
-    assert features[FEATURE_NAMES.index("last_index")] == pytest.approx(0.5)
+    assert features[FEATURE_NAMES.index("last_index")] == pytest.approx(0.25)
     assert features[FEATURE_NAMES.index("std_index")] == pytest.approx(np.std(state[:, 16]))
 
 
